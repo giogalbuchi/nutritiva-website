@@ -1,0 +1,32 @@
+@mixin base-btn {
+    cursor: pointer;
+    height: 42px;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.5s ease-in-out;
+    @include themed(){
+        border: 2px solid t('bg-panel');
+        background-color: transparent;
+        color: t('color-headings');
+    }
+
+    &:active,
+    &:focus {
+        outline: none;
+        @include themed() {
+            color: t('color-text');
+        }
+    }
+
+    &:hover {
+        @include themed() {
+            background-color: t('bg-panel');
+            color: t('color-headings');
+        }
+        
+    }
+}
+
+.btn {
+    @include base-btn();
+}

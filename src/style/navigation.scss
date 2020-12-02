@@ -1,11 +1,23 @@
+@mixin position($sticky) {
+    -webkit-position: $sticky;
+    position: $sticky;
+}
+
+$sticky: sticky;
+
+
 .nav-wrapper {
+    @include position($sticky);
+    top: 0;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     padding: 30px;
+    width: 100%;
+    overflow: hidden;
 
     @include themed() {
-        background-color: t('bg');
+        background-color: t('bg-panel');
     }
     
 }

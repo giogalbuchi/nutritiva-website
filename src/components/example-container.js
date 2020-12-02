@@ -51,12 +51,14 @@ export default class ExamplesContainer extends Component {
 
         return(
             <div>
-                <h2>{this.state.pageTitle}</h2>
+                <div className="filter-btns">
+                    <button className="btn" onClick={() => this.handleFilter("Recipe")}>Recipes</button>
+                    <button className="btn" onClick={() => this.handleFilter("Fact")}>Facts</button>
+                </div>
 
-                <button onClick={() => this.handleFilter("Recipe")}>Recipes</button>
-                <button onClick={() => this.handleFilter("Fact")}>Facts</button>
-
-                <div className='example-items-wrapper'>{this.exampleItems()}</div>
+                <div className='example-items-wrapper'>
+                    {this.exampleItems()}
+                </div>
             </div>
         );
     }

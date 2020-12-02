@@ -5,7 +5,7 @@ import ExamplesContainer from "../example-container";
 
 export default function() {
   return (
-    <div>
+    <div className='blog-page'>
       <h2>Blog</h2>
 
       <ExamplesContainer />
