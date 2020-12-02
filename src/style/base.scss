@@ -1,0 +1,15 @@
+body {
+    margin: 0px;
+    font-family: "Montserrat", sans-serif;
+    @include themed() {
+        background-color: t('bg');
+    }
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    @include themed() {
+        background-color: t('bg');
+    }
+}
