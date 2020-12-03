@@ -1,7 +1,7 @@
 import React, {Component } from "react";
 import axios from 'axios';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { NavItem } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import logo from "../../static/assets/images/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,6 +28,28 @@ export default class NavigationComponent extends Component {
         this.props.changeTheme();
         this.changeIcon();
     }
+
+    dynamicLink = (route, linkText) => {
+        return (
+            <div className="nav-link-wrapper">
+                <NavLink to={route} activeClassName='nav-link-active'>
+                    {linkText}
+                </NavLink>
+            </div>
+        );
+    }
+
+    handleSignOut = () => {
+        axios.delete("https://api.devcamp.space/logout", { withCredentials : true }).then(response => {
+            if (response.status === 200) {
+                window.location.reload(true);
+                props.handleSuccessfulLogout();
+            }
+            return response.data;
+        }).catch(error => {
+            console.log("Error signing out", error);
+        });
+    };
 
     
 
@@ -60,7 +82,9 @@ export default class NavigationComponent extends Component {
                                 Blog
                             </NavLink>
                         </div> 
-                        {false ? <button>Add Blog</button> : null}
+                        {this.props.loggedInStatus === "LOGGED_IN" ? (
+                            this.dynamicLink("/blog-manager", "Blog Manager")
+                        ) : null}
                     </div>
                     
                     <div className='right-side'>
@@ -70,10 +94,15 @@ export default class NavigationComponent extends Component {
                         <div className='nutritiva-name'>
                             <h3>   Nutritiva</h3>
                         </div>
+                        {this.props.loggedInStatus === "LOGGED_IN" ? (
+                            <a onClick={this.handleSignOut.bind(this)}>Sign Out</a>
+                        ) : null}
                     </div>
                 </div>
             </div>
         );
+
     }
 }
+
     
