@@ -32,3 +32,13 @@
         box-shadow: 0px 2px 15px rgba(0,0,0,0.1);
     }
 }
+
+.login-msg {
+    @include themed() {
+        color: t('color-headings');
+    }
+}
+
+.login-form {
+    @include input-element();
+}

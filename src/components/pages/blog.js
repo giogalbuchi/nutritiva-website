@@ -6,7 +6,7 @@ import ExamplesContainer from "../example-container";
 export default function() {
   return (
     <div className='blog-page'>
-      <h2>Blog</h2>
+      <h2>SearchBar</h2>
 
       <ExamplesContainer />
 

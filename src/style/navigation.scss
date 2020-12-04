@@ -83,4 +83,17 @@
             color: t('color-headings');
         }
     }
+
+    .sign-out-icon {
+        cursor: pointer;
+        margin-left: 15px;
+        margin-right: 40px;
+        @include themed() {
+            color: t('color-headings');
+        }
+
+        &:hover {
+            color: #FF6961;
+        }
+    }
 }

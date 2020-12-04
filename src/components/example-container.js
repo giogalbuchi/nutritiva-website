@@ -1,5 +1,6 @@
 import React, {Component } from 'react';
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ExampleItem from './example-item';
 
@@ -52,8 +53,8 @@ export default class ExamplesContainer extends Component {
         return(
             <div>
                 <div className="filter-btns">
-                    <button className="btn" onClick={() => this.handleFilter("Recipe")}>Recipes</button>
-                    <button className="btn" onClick={() => this.handleFilter("Fact")}>Facts</button>
+                    <button className="btn" onClick={() => this.handleFilter("Recipe")}>Recipes <FontAwesomeIcon icon="cookie" /></button>
+                    <button className="btn" onClick={() => this.handleFilter("Fact")}>Facts <FontAwesomeIcon icon="info-circle" /></button>
                 </div>
 
                 <div className='example-items-wrapper'>

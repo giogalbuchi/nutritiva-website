@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faMoon, faSun, faSignOutAlt, faTrash, faCookie, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faMoon, faSun);
+library.add(faMoon, faSun, faTrash, faSignOutAlt, faCookie, faInfoCircle);
 
 import NavigationContainer from './navigation-container';
 import Home from './pages/home'
@@ -81,7 +81,7 @@ export default class App extends Component {
   }
 
   authorizedPages() {
-    return [<Route path="/blog-manager" component={BlogManager} />]
+    return [<Route  key="blog-manager" path="/blog-manager" component={BlogManager} />];
   }
 
   render() {
@@ -91,8 +91,6 @@ export default class App extends Component {
           <Router>
             <div>
               <NavigationContainer {...this.props} changeTheme={this.changeTheme} loggedInStatus={this.state.loggedInStatus} handleSuccessfulLogout={this.handleSuccessfulLogout} history={this.history} />
-
-              <h2>{this.state.loggedInStatus}</h2>
 
               <Switch>
                 <Route exact path="/" component={Home} />

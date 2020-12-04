@@ -95,7 +95,7 @@ export default class NavigationComponent extends Component {
                             <h3>   Nutritiva</h3>
                         </div>
                         {this.props.loggedInStatus === "LOGGED_IN" ? (
-                            <a onClick={this.handleSignOut.bind(this)}>Sign Out</a>
+                            <a className="sign-out-icon" onClick={this.handleSignOut.bind(this)}><FontAwesomeIcon icon="sign-out-alt" /></a>
                         ) : null}
                     </div>
                 </div>
