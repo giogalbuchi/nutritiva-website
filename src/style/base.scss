@@ -4,6 +4,7 @@ body {
     font-family: "Montserrat", sans-serif;
     @include themed() {
         background-color: t('bg');
+        background-image: t('bg-panel');
     }
 }
 
@@ -12,5 +13,6 @@ body {
     grid-template-columns: 1fr;
     @include themed() {
         background-color: t('bg');
+        background-image: t('bg-panel');
     }
 }

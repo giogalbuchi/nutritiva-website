@@ -20,15 +20,15 @@ $icons: 'icons';
 
 $themes: (
     default: (
-        bg: #FCFCFC,
-        bg-panel: #EBEBEB,
+        bg: #e2c9be,
+        bg-panel: linear-gradient(315deg, #f0d1a0 0%, #FFFEF9 74%),
         color-headings: #C9A367,
         color-text: #333333,
         icons: #3e4e53
     ),
     dark: (
-        bg: #333333,
-        bg-panel: #434343,
+        bg: #000000,
+        bg-panel: linear-gradient(315deg, #000000 0%, #414141 74%),
         color-headings: #F0D1A0,
         color-text: #B5B5B5,
         icons: #ffd475
