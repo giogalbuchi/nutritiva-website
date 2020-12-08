@@ -21,18 +21,22 @@ export default class ExampleItem extends Component {
     render() {
         const { id, name, description, thumb_image_url } = this.props.item;
         return (
-            <div className="example-item-wrapper" onMouseEnter={() => this.handleMouseEnter()} onMouseLeave={() => this.handleMouseLeave()}>
-                <div 
-                    className={"example-img-background " + this.state.exampleItemClass }
-                    style={{
-                        backgroundImage: "url(" + thumb_image_url + ")"
-                    }}
-                />
-                <div className='img-text-wrapper'>
-                    <div className='title'>{name}</div>
-                    <div className="subtitle">{description}</div>
+            <Link to={`/b/${id}`}>
+                <div className="example-item-wrapper" onMouseEnter={() => this.handleMouseEnter()} onMouseLeave={() => this.handleMouseLeave()}>
+                    <div 
+                        className={"example-img-background " + this.state.exampleItemClass }
+                        style={{
+                            backgroundImage: "url(" + thumb_image_url + ")"
+                        }}
+                    />
+                    <div className='img-text-wrapper'>
+                        
+                            <div className='title'>{name}</div>
+        
+                        <div className="subtitle">Here goes the Subtitle!</div>
+                    </div>
                 </div>
-            </div>
+            </Link>
         );
     }
 }

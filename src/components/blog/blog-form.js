@@ -2,6 +2,8 @@ import React, { Component} from 'react';
 import axios from 'axios';
 import DropzoneComponent from "react-dropzone-component";
 
+import RichTextEditor from "../forms/rich-text-editor";
+
 import "../../../node_modules/react-dropzone-component/styles/filepicker.css";
 import "../../../node_modules/dropzone/dist/min/dropzone.min.css";
 
@@ -17,7 +19,10 @@ export default class BlogForm extends Component {
             url:"",
             thumb_image:"",
             banner_image:"",
-            logo:""
+            logo:"",
+            editMode: false,
+            apiUrl: "https://nutritiva.devcamp.space/portfolio/portfolio_items",
+            apiAction: "post"
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -25,8 +30,59 @@ export default class BlogForm extends Component {
         this.componentConfig = this.componentConfig.bind(this);
         this.djsConfig = this.djsConfig.bind(this);
         this.handleThumbDrop = this.handleThumbDrop.bind(this);
+        this.deleteImage = this.deleteImage.bind(this);
+        this.handleRichTextEditorChange = this.handleRichTextEditorChange.bind(this);
 
         this.thumbRef = React.createRef();
+    }
+
+    handleRichTextEditorChange(description) {
+        this.setState({ description });
+    }
+
+    deleteImage(imageType) {
+        axios
+            .delete(
+                `https://api.devcamp.space/portfolio/delete-portfolio-image/${this.state.id}?image_type=${imageType}`,
+                { withCredentials: true }
+            )
+            .then(response => {
+                this.setState({
+                    [`${imageType}_url`]: ""
+                });
+            })
+            .catch(error => {
+                console.log("deleteImage error", error);
+            });
+    }
+
+    componentDidUpdate() {
+        if (Object.keys(this.props.blogToEdit).length > 0) {
+            const {
+                id,
+                name,
+                description,
+                category,
+                position,
+                url,
+                thumb_image_url
+            } = this.props.blogToEdit;
+
+            this.props.clearBlogToEdit();
+
+            this.setState({
+                id: id,
+                name: name || "",
+                description: description || "",
+                category: category || "Recipe",
+                position: position || "",
+                url: url || "",
+                editMode: true,
+                apiUrl: `https://nutritiva.devcamp.space/portfolio/portfolio_items/${id}`,
+                apiAction: "patch",
+                thumb_image_url: thumb_image_url || ""
+            });
+        }
     }
 
     handleThumbDrop() {
@@ -73,14 +129,18 @@ export default class BlogForm extends Component {
     }
 
     handleSubmit(event) {
-        axios
-            .post(
-                "https://nutritiva.devcamp.space/portfolio/portfolio_items",
-                this.buildForm(),
-                { withCredentials: true }
-            )
+        axios({
+            method: this.state.apiAction,
+            url: this.state.apiUrl,
+            data: this.buildForm(),
+            withCredentials: true
+            })
             .then(response => {
-                this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
+                if (this.state.editMode) {
+                    this.props.handleEditFormSubmission();
+                } else {
+                    this.props.handleNewFormSubmission(response.data.portfolio_item);
+                }
 
                 this.setState({
                     name:"",
@@ -88,7 +148,10 @@ export default class BlogForm extends Component {
                     category: "Recipe",
                     position: "",
                     url: "",
-                    thumb_image: ""
+                    thumb_image: "",
+                    editMode: false,
+                    apiUrl: "https://nutritiva.devcamp.space/portfolio/portfolio_items",
+                    apiAction: "post"
                 });
 
                 [this.thumbRef].forEach(ref => {
@@ -145,24 +208,38 @@ export default class BlogForm extends Component {
                     </div>
 
                     <div className="one-column">
-                    <textarea
+                    {/* <textarea
                         type="text"
                         name="description"
                         placeholder="Description"
                         value={this.state.description}
                         onChange={this.handleChange}
-                    />
+                    /> */}
+                        <RichTextEditor handleRichTextEditorChange={this.handleRichTextEditorChange} />
                     </div>
 
-                    <div className="image-uploader one-cloumn">
-                        <DropzoneComponent
-                          ref={this.thumbRef}
-                          config={this.componentConfig()}
-                          djsConfig={this.djsConfig()}
-                          eventHandlers={this.handleThumbDrop()}
-                        >
-                            <div className="dz-message">Blog Image</div>
-                        </DropzoneComponent>
+                    <div className="image-uploader one-column">
+                        {this.state.thumb_image_url && this.state.editMode ? (
+                            <div className="blog-manager-image-wrapper">
+                                <img src={this.state.thumb_image_url} />
+
+                                <div className="image-removal-link">
+                                    <a onClick={() => this.deleteImage("thumb_image")}>
+                                        Remove file
+                                    </a>
+                                </div>
+                            </div>
+                        ) : (
+                            <DropzoneComponent
+                                ref={this.thumbRef}
+                                config={this.componentConfig()}
+                                djsConfig={this.djsConfig()}
+                                eventHandlers={this.handleThumbDrop()}
+                            >
+                                <div className="dz-message">Blog Image</div>
+                            </DropzoneComponent>
+                        )}
+                        
                     </div>
 
                     <div className="one-column">

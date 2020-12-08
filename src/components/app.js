@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon, faSun, faSignOutAlt, faTrash, faCookie, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faMoon, faSun, faTrash, faSignOutAlt, faCookie, faInfoCircle);
+import Icons from "./icons";
 
 import NavigationContainer from './navigation-container';
 import Home from './pages/home'
@@ -15,10 +12,13 @@ import Blog from './pages/blog';
 import BlogManager from './pages/blog-manager';
 import Auth from "./pages/auth";
 import NoMatch from './pages/no-match';
+import BlogDetail from './example-detail';
 
 export default class App extends Component { 
   constructor(props) {
     super(props);
+
+    Icons();
 
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
@@ -109,6 +109,7 @@ export default class App extends Component {
                 <Route path='/about-me' component={About} />
                 <Route path='/contact' component={Contact} />
                 <Route path='/blog' component={Blog} />
+                <Route path="/b/:slug" component={BlogDetail} />
                 {this.state.loggedInStatus === "LOGGED_IN" ? (
                   this.authorizedPages()
                 ) : null}

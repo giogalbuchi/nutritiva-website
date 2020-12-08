@@ -3,6 +3,7 @@
     height: 42px;
     font-size: 1em;
     font-weight: 500;
+    border-radius: 5px;
     transition: all 0.1s ease-in-out;
     @include themed(){
         border: 2px solid t('color-headings');

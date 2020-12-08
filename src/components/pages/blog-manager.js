@@ -9,12 +9,28 @@ export default class BlogManager extends Component {
         super();
 
         this.state = {
-            blogItems: []
+            blogItems: [],
+            blogToEdit: {}
         };
 
-        this.handleSuccessfulFormSubmission = this.handleSuccessfulFormSubmission.bind(this);
+        this.handleNewFormSubmission = this.handleNewFormSubmission.bind(this);
+        this.handleEditFormSubmission = this.handleEditFormSubmission.bind(this);
         this.handleFormSubmissionError = this.handleFormSubmissionError.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
+        this.handleEditClick = this.handleEditClick.bind(this);
+        this.clearBlogToEdit = this.clearBlogToEdit.bind(this);
+    }
+
+    clearBlogToEdit() {
+      this.setState({
+        blogToEdit: {}
+      });
+    }
+
+    handleEditClick(portfolioItem) {
+      this.setState({
+        blogToEdit: portfolioItem
+      });
     }
 
     handleDeleteClick(portfolioItem) {
@@ -37,10 +53,14 @@ export default class BlogManager extends Component {
       });
     }
 
-    handleSuccessfulFormSubmission(blogItem) {
+    handleEditFormSubmission() {
+        this.getBlogItems();
+    }
+
+    handleNewFormSubmission(blogItem) {
         this.setState({
-            blogItems: [blogItem].concat(this.state.blogItems)
-        });
+          blogItems: [blogItem].concat(this.state.blogItems)
+      });
     }
 
     handleFormSubmissionError(error) {
@@ -67,13 +87,16 @@ export default class BlogManager extends Component {
       <div className="blog-manager-wrapper">
         <div className="left-column">
             <BlogForm
-                handleSuccessfulFormSubmission={this.handleSuccessfulFormSubmission}
+                handleNewFormSubmission={this.handleNewFormSubmission}
+                handleEditFormSubmission={this.handleEditFormSubmission}
                 handleFormSubmissionError={this.handleFormSubmissionError}
+                clearBlogToEdit={this.clearBlogToEdit}
+                blogToEdit={this.state.blogToEdit}
             />
         </div>
 
         <div className="right-column">
-            <BlogSidebarList handleDeleteClick={this.handleDeleteClick} data={this.state.blogItems} />
+            <BlogSidebarList handleDeleteClick={this.handleDeleteClick} data={this.state.blogItems} handleEditClick={this.handleEditClick} />
         </div>
       </div>
     );
