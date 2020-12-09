@@ -4,8 +4,9 @@ import {
     faSignOutAlt, 
     faTrash, 
     faCookie, 
-    faInfoCircle, 
-    faEdit 
+    faInfoCircle,
+    faEdit,
+    
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
