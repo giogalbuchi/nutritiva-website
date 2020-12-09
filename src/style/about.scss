@@ -44,9 +44,40 @@
     .social-media-section {
         display: flex;
         justify-content: center;
+        align-items: center;
         margin-bottom: 40px;
         margin-top: 40px;
         font-family: 'Montserrat';
         font-size: 1.3em;
+
+        .social-text {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            @include themed() {
+                color: t('color-text');
+            }
+
+            .cursive {
+                font-family: 'Petit Formal Script', cursive;
+                font-size: 1.1em;
+                margin-right: 6px;
+                @include themed() {
+                    color: t('color-headings');
+                }
+            }
+        }
+
+        .social-icon {
+            cursor: pointer;
+            font-size: 2em;
+            @include themed() {
+                color: t('color-headings');
+            }
+
+            &:hover {
+                color: #aec6cf;
+            }
+        }
     }
 }

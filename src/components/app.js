@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Icons from "./icons";
+import {faFacebookSquare, faInstagram } from '@fortawesome/free-brands-svg-icons';
+
+library.add(faFacebookSquare, faInstagram);
 
 import NavigationContainer from './navigation-container';
 import Home from './pages/home'
@@ -13,6 +16,7 @@ import BlogManager from './pages/blog-manager';
 import Auth from "./pages/auth";
 import NoMatch from './pages/no-match';
 import BlogDetail from './example-detail';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 export default class App extends Component { 
   constructor(props) {

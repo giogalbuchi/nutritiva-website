@@ -10,9 +10,6 @@ export default function() {
 
       <ExamplesContainer />
 
-      <div>
-        <Link to="/about-me">Read more about myself</Link>
-      </div>
     </div>
   );
 }

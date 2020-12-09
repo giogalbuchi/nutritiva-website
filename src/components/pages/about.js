@@ -40,7 +40,9 @@ export default function() {
             </div>
 
             <div className="social-media-section one-column">
-                FIND US HERE! 
+                <div className="social-text"><p className="cursive">find us</p>here too!</div> 
+                <a className="social-icon"><FontAwesomeIcon icon={['fab', 'facebook-square']} /></a>
+                <a className="social-icon"><FontAwesomeIcon icon={['fab', 'instagram']} /></a>
             </div>
         </div>
     )
