@@ -7,7 +7,7 @@ export default function() {
         <div className="content-page-wrapper">
 
             <div className="about-title one column">
-                WE ARE NUTRITIVA
+                <p>we are</p> NUTRITIVA
             </div>
 
             <div className="two-column">
