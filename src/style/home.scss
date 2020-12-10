@@ -1,0 +1,179 @@
+.home-container {
+    height: 100%;
+    width: 100vw;
+    padding: 0px;
+    margin: 0px;
+    @include themed() {
+        background-color: t('bg');
+        background-image: t('bg-panel');
+    }
+}
+
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 40px;
+    background-size: cover;
+    height: 1000px;
+    width: 100vw;
+    @include themed() {
+        border: 1px solid t('bg-panel');
+        box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+    }
+
+}
+.headline {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 8vh;
+    padding-top: 100px;
+    margin-left: 50px;
+    // width: 100%;
+    display: block;
+    height: 450px;
+
+    #nutrition {
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 8vh;
+        font-weight: bold;
+        padding-top: 100px;
+        margin-left: 50px;
+        display: block;
+    }
+    
+    #meets {
+        font-family: 'Petit Formal Script', cursive;
+        text-transform: lowercase;
+        margin-bottom: 10px;
+        margin-left: 370px;
+    }
+
+    span {
+        margin-left: 500px;
+    }
+    
+    span:before{
+        content: '';
+        animation: animate infinite 15s;
+    }
+    
+    @keyframes animate{
+        0%{
+            content:'SIMPLICITY';
+        }
+        20%{
+            content:'DELICIOUSNESS';
+        }
+        40%{
+            content:'QUALITY';
+        }
+        60%{
+            content:'PLAINNESS';
+        }
+        80%{
+            content:'AFFORDABILITY';
+        }
+        100%{
+            content:'YOU';
+        }
+    }
+}
+
+.supporting-copy {
+    font-size: 30px;
+    font-family: 'Raleway', sans-serif;
+    color: rgba(255, 255, 255, 0.493);
+    margin-left: 100px;
+    width: 1000px;
+}
+
+.benefits-section {
+    margin-top: 60px;
+    margin-left: 300px;
+    margin-right: 300px;
+    .benefits-title {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 100px;
+        font-size: 36px;
+        font-weight: bold;
+        @include themed() {
+            color: t('color-headings');
+        }
+    }
+    .cooking-benefit {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 40px;
+
+        .cooking-left-column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cooking-left-column img {
+            width: 600px;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 5px;
+            @include themed() {
+                border: 1px solid t('bg-panel');
+                box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .cooking-right-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .fitness-benefit {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 50px;
+
+        .fitness-right-column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fitness-right-column img {
+            width: 600px;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 5px;
+            @include themed() {
+                border: 1px solid t('bg-panel');
+                box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .fitness-left-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.features-section {
+    margin-top: 40px;
+    margin-left: 100px;
+    margin-right: 100px;
+    .recipes-feature {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .facts-feature {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
