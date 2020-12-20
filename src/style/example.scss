@@ -83,16 +83,20 @@
 }
 
 @media (max-width: 48em) {
-    .filter-btns {
+
+    .blog-general-container {
+        display: grid;
         grid-template-columns: 1fr;
-        margin-left: 200px;
-        width: 300px;
+        margin: auto;
+        width: 70%;
+    }
+    .filter-btns {
+        align-self: center;
     }
 
     .example-items-wrapper {
-        grid-template-columns: 1fr;
-        margin-left: 200px;
-        width: 300px;
+        display: flex;
+        flex-direction: column;
 
         .example-img-background {
             height: 100px;

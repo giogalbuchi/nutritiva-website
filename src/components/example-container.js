@@ -51,7 +51,7 @@ export default class ExamplesContainer extends Component {
     render() {
 
         return(
-            <div>
+            <div className='blog-general-container'>
                 <div className="filter-btns">
                     <button className="btn" onClick={() => this.handleFilter("Recipe")}>Recipes <FontAwesomeIcon icon="cookie" /></button>
                     <button className="btn" onClick={() => this.handleFilter("Fact")}>Facts <FontAwesomeIcon icon="info-circle" /></button>
