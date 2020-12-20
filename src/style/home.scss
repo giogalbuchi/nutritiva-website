@@ -284,3 +284,117 @@
         }
     }
 }
+
+@media (max-width: 48em) {
+
+    .home-container {
+        height: 100%;
+        width: 100vw;
+    }
+
+    .hero-section {
+        grid-template-columns: 1fr;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .headline {
+        font-size: 6vh;
+        padding-top: 70px;
+        height: 300px;
+
+        #nutrition {
+            padding-top: 30px;
+        }
+
+        #meets {
+            margin-left: 130px;
+        }
+
+        span {
+            margin-left: 100px;
+            text-align: center;
+        }
+    }
+
+    .supporting-copy {
+        font-size: 26px;
+        margin-left: 0px;
+        width: 100vw;
+        text-align: center;
+    }
+
+    .benefits-section {
+        margin-left: 0px;
+        
+        .benefits-title {
+            margin-bottom: 50px;
+            margin-left: 250px;
+            font-size: 30px;
+        }
+
+        .cooking-benefit {
+            grid-template-columns: 1fr;
+            margin-top: 20px;
+
+            .cooking-right-column {
+                margin-left: 100px;
+            }
+
+            .cooking-left-column img{
+                margin-left: 100px;
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        .fitness-benefit {
+            grid-template-columns: 1fr;
+            margin-top: 20px;
+
+            .fitness-right-column img {
+                margin-left: 100px;
+                margin-top: 20px;
+                width: 300px;
+                height: 300px;
+            }
+
+            .fitness-left-column {
+                margin-left: 100px;
+            }
+        }
+    }
+
+    .features-section {
+        margin-top: 100px;
+        margin-left: 200px;
+
+        .features-title {
+            margin-left: 50px;
+        }
+
+        .recipes-feature {
+            grid-template-columns: 1fr;
+
+            .recipes-right-column {
+                margin-top: 50px;
+                text-align: center;
+            }
+        }
+
+
+        .facts-feature {
+            grid-template-columns: 1fr;
+
+            .facts-left-column {
+                text-align: center;
+            }
+
+            .facts-right-column {
+                margin-top: 50px;
+            }
+        }
+    }
+
+
+}

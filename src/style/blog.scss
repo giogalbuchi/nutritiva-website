@@ -2,3 +2,10 @@
     margin-right: 380px;
     margin-left: 380px;
 }
+
+@media (max-width: 48em) {
+    .blog-page {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}

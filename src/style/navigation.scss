@@ -98,3 +98,64 @@
         }
     }
 }
+
+label {
+    margin: 0 40px 0 20px;
+    font-size: 35px;
+    line-height: 70px;
+    @include themed() {
+        color: t('color-headings');
+    }
+    display: none;
+}
+#toggle {
+    display: none;
+}
+
+@media (max-width: 48em) {
+
+    .toggle {
+        font-size: 26px;
+        @include themed() {
+            color: t('color-headings');
+        }
+        margin-left: 0px;
+        cursor: pointer;
+    }
+
+    .right-side {
+        display: flex;
+        justify-content: end;
+    }
+
+    .center-side {
+        display: none;
+    }
+
+    .center-side.active {
+        display: block;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        align-content: center;
+        width: 100px;
+        height: 250px;
+    }
+    .nav-link-wrapper {
+        display: block;
+        margin-top: 20px;
+    }
+    .nutritiva-name {
+        display: none;
+    }
+}
+
+@media (min-width: 48em) {
+    .center-side {
+        display: flex;
+    }
+
+    .toggle {
+        display: none;
+    }
+}

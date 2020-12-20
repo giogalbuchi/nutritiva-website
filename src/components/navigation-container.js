@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import logo from "../../static/assets/images/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Icons from "./icons";
 
 
 
@@ -18,6 +19,12 @@ export default class NavigationComponent extends Component {
 
         this.changeIcon = this.changeIcon.bind(this);
         this.handleChangeTheme = this.handleChangeTheme.bind(this);
+        this.handleHamburger = this.handleHamburger.bind(this);
+    }
+
+    handleHamburger() {
+        const center = document.getElementById('center');
+        center.classList.toggle('active');
     }
 
     changeIcon() {
@@ -57,11 +64,12 @@ export default class NavigationComponent extends Component {
         return(
             <div>
                 <div className="nav-wrapper">
+
                     <div className='left-side'>
                         <img src="../../static/assets/images/logo.png" alt="Logo"/>
                     </div>
 
-                    <div className='center-side'>
+                    <div  id="center" className='center-side'>
                         <div className='nav-link-wrapper'>
                             <NavLink exact to="/" activeClassName="nav-link-active">
                                 Home
@@ -98,6 +106,8 @@ export default class NavigationComponent extends Component {
                             <a className="sign-out-icon" onClick={this.handleSignOut.bind(this)}><FontAwesomeIcon icon="sign-out-alt" /></a>
                         ) : null}
                     </div>
+
+                    <a onClick={this.handleHamburger} className="toggle" id="navHamburger"><FontAwesomeIcon icon="bars" /></a>
                 </div>
             </div>
         );

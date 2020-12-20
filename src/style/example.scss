@@ -81,3 +81,26 @@
     transition: 1s;
     filter: brightness(10%);
 }
+
+@media (max-width: 48em) {
+    .filter-btns {
+        grid-template-columns: 1fr;
+        margin-left: 200px;
+        width: 300px;
+    }
+
+    .example-items-wrapper {
+        grid-template-columns: 1fr;
+        margin-left: 200px;
+        width: 300px;
+
+        .example-img-background {
+            height: 100px;
+            width: 100px;
+        }
+
+        .img-text-wrapper {
+            height: 50%;
+        }
+    }
+}
