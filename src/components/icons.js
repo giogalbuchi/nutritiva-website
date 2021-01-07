@@ -6,14 +6,15 @@ import {
     faCookie, 
     faInfoCircle,
     faEdit,
-    faBars
+    faBars,
+    faSpinner
     
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 const Icons = () => {
-    return library.add(faMoon, faSun, faTrash, faSignOutAlt, faCookie, faInfoCircle, faEdit, faBars);
+    return library.add(faMoon, faSun, faTrash, faSignOutAlt, faCookie, faInfoCircle, faEdit, faBars, faSpinner);
 };
 
 export default Icons;

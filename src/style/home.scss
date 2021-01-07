@@ -7,6 +7,16 @@
         background-color: t('bg');
         background-image: t('bg-panel');
     }
+
+    .copyright {
+        @include themed() {
+            color: t('color-text');
+        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
 }
 
 .hero-section {
@@ -23,7 +33,9 @@
 
 }
 .headline {
-    color: #fff;
+    @include themed() {
+        color: t('color-headings');
+    }
     text-transform: uppercase;
     font-size: 8vh;
     padding-top: 100px;
@@ -33,7 +45,9 @@
     height: 450px;
 
     #nutrition {
-        color: #fff;
+        @include themed() {
+            color: t('color-headings');
+        }
         text-transform: uppercase;
         font-size: 8vh;
         font-weight: bold;
@@ -125,6 +139,9 @@
         }
 
         .cooking-right-column {
+            p {
+                font-size: 1.5em;
+            }
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -135,6 +152,7 @@
             }
             
             h2 {
+                font-size: 1.9em;
                 @include themed() {
                     color: t('color-headings');
                 }
@@ -165,6 +183,9 @@
         }
 
         .fitness-left-column {
+            p {
+                font-size: 1.5em;
+            }
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -174,6 +195,7 @@
                 color: t('color-text');
             }
             h2 {
+                font-size: 1.9em;
                 @include themed() {
                     color: t('color-headings');
                 }
@@ -200,16 +222,13 @@
 
     .recipes-feature {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-gap: 25px;
 
         .recipes-left-column {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .recipes-right-column {
+            
+            font-size: 1.5em;
+          
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -218,15 +237,32 @@
                 color: t('color-text')
             }
         }
+
+        .recipes-right-column {
+            a {
+                font-size: 1.5em;
+                text-decoration: none;
+                @include themed() {
+                    color: t('color-headings')
+                }
+            }
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        }
     }
 
     .facts-feature {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-gap: 25px;
         margin-top: 100px;
         margin-bottom: 100px;
 
         .facts-left-column {
+            font-size: 1.5em;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -237,6 +273,13 @@
         }
 
         .facts-right-column {
+            a {
+                font-size: 1.5em;
+                text-decoration: none;
+                @include themed() {
+                    color: t('color-headings')
+                }
+            }
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -249,12 +292,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 100px;
     margin-top: 40px;
     font-family: 'Montserrat';
     font-size: 1.3em;
 
+
     .social-text {
+        
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -298,14 +343,15 @@
     .hero-section {
         grid-template-columns: 1fr;
         margin: auto;
-        height: 100vh;
+        height: 550px;
         width: auto;
+        background-size: 700px 550px;
     }
 
     .headline {
         font-size: 6vh;
         padding-top: 70px;
-        height: 300px;
+        height: 270px;
         margin: auto;
         margin-left: auto;
         width: 70%;
@@ -389,6 +435,10 @@
 
         .recipes-feature {
             grid-template-columns: 1fr;
+
+            .recipes-left-column {
+                text-align: center;
+            }
 
             .recipes-right-column {
                 margin-top: 50px;

@@ -1,49 +1,36 @@
 import React from "react";
-import aboutImg from "../../../static/assets/images/about.png";
+import aboutImg from "../../../static/assets/images/about.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function() {
     return (
-        <div className="content-page-wrapper">
+        <div className="about-container">
+            <div className="content-page-wrapper">
 
-            <div className="about-title one column">
-                <p>we are</p> NUTRITIVA
-            </div>
-
-            <div className="two-column">
-                <div
-                className='left-column'
-                style={{
-                    backgroundImage: `url(${aboutImg})`
-                }}
-                />
-
-                <div className="right-column">
-                    Maecenas faucibus mollis interdum. Integer posuere erat a ante venenatis
-                    dapibus posuere velit aliquet. Sed posuere consectetur est at lobortis.
-                    Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                    Aenean lacinia bibendum nulla sed consectetur. Maecenas sed diam eget
-                    risus varius blandit sit amet non magna. Morbi leo risus, porta ac
-                    consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida
-                    at eget metus. Donec sed odio dui. Cras mattis consectetur purus sit
-                    amet fermentum. Etiam porta sem malesuada magna mollis euismod. Nulla
-                    vitae elit libero, a pharetra augue. Aenean eu leo quam. Pellentesque
-                    ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non
-                    commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
-                    elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-                    et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-                    commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis
-                    risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac
-                    consectetur ac, vestibulum at eros. Vestibulum id ligula porta felis
-                    euismod semper.
+                <div className="about-title one column">
+                    <p>we are</p> NUTRITIVA
                 </div>
-            </div>
 
-            <div className="social-media-section one-column">
-                <div className="social-text"><p className="cursive">find us</p>here too!</div> 
-                <a className="social-icon"><FontAwesomeIcon icon={['fab', 'facebook-square']} /></a>
-                <a className="social-icon"><FontAwesomeIcon icon={['fab', 'instagram']} /></a>
+                <div className="about-content">
+
+                    <div className='left-column'>
+                        <img src={aboutImg} alt="nutritiva"/>
+                    </div>
+
+
+                    <div className="right-column">
+                        <p><strong>Nutritiva </strong>was born by the desire for other people to be able to experience the pleasure for healthy food. <br />Many times, we hear about people suffering because they are going through restrictive diets, when in fact, is not necessary. The safest path will always be to make small changes over time in our daily nutrition with the integration of healthy habits.<br /> <br /><strong>Our purpose</strong> from day one was and is for people to be able to eat healthily without stress nor pain in their attempt. On the contrary, so that they are able to enjoy homemade, tasty and healthy food.</p>
+                    </div>
+                </div>
+
+                <div className="social-media-section one-column">
+                    <div className="social-text"><p className="cursive">find us</p>here too!</div> 
+                    <a href="https://www.facebook.com/Nutritiva-102825981535863" className="social-icon"><FontAwesomeIcon icon={['fab', 'facebook-square']} /></a>
+                    <a href="https://www.instagram.com/nutritiva.hermanas/" className="social-icon"><FontAwesomeIcon icon={['fab', 'instagram']} /></a>
+                </div>
+
             </div>
+            <div className="copyright">Copyright © Giovanni Galbuchi 2021</div>
         </div>
     )
 }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Icons from "./icons";
-import {faFacebookSquare, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import {faFacebookSquare, faInstagram, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { auth } from '../firebase';
 
-library.add(faFacebookSquare, faInstagram);
+library.add(faFacebookSquare, faInstagram, faGoogle);
 
 import NavigationContainer from './navigation-container';
 import Home from './pages/home'
@@ -15,8 +17,9 @@ import Blog from './pages/blog';
 import BlogManager from './pages/blog-manager';
 import Auth from "./pages/auth";
 import NoMatch from './pages/no-match';
-import BlogDetail from './example-detail';
+import BlogDetail from './blog-detail';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import AdminPage from './pages/admin-page';
 
 export default class App extends Component { 
   constructor(props) {
@@ -26,11 +29,14 @@ export default class App extends Component {
 
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
-      dark: false
+      dark: false,
+      user: '',
+      isAdmin: 'no'
     };
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
+    this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
 
     this.changeTheme = this.changeTheme.bind(this);
   }
@@ -51,6 +57,7 @@ export default class App extends Component {
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN"
     });
+    
   }
 
   changeTheme() {
@@ -58,26 +65,32 @@ export default class App extends Component {
   }
 
   checkLoginStatus() {
-    return axios.get("https://api.devcamp.space/logged_in", {
-      withCredentials: true
-    }).then(response => {
-      const loggedIn = response.data.logged_in;
-      const loggedInStatus = this.state.loggedInStatus;
-
-      if (loggedIn && loggedInStatus === "LOGGED_IN") {
-        return loggedIn;
-      } else if (loggedIn && loggedInStatus === "NOT_LOGGED_IN") {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        user.getIdTokenResult().then(idTokenResult => {
+          const userAdmin = idTokenResult.claims.admin
+          if (userAdmin === true) {
+            this.setState({
+              isAdmin: 'yes'
+            })
+          } else {
+            this.setState({
+              isAdmin: 'no'
+            })
+          }
+        })
+        console.log('user logged in: ', user);
         this.setState({
-          loggedInStatus: "LOGGED_IN"
+          loggedInStatus: "LOGGED_IN",
+          user: user.email
         });
-      } else if (!loggedIn && loggedInStatus === "LOGGED_IN") {
+      } else {
+        console.log('user logged out');
         this.setState({
-          loggedInStatus: "NOT_LOGGED_IN"
+          loggedInStatus: 'NOT_LOGGED_IN'
         });
       }
-    }).catch(error => {
-      console.log("Error", error);
-    });
+    })
   }
 
   componentDidMount() {
@@ -85,45 +98,73 @@ export default class App extends Component {
   }
 
   authorizedPages() {
-    return [<Route  key="blog-manager" path="/blog-manager" component={BlogManager} />];
+    return [<Route  key="blog-manager" path="/blog-manager" component={BlogManager} />, <Route 
+    path='/admin' 
+    render={props => ( 
+      <AdminPage
+        userEmail={this.state.user}
+      />
+    )}
+  /> ];
   }
 
   render() {
     return (
-      <div className={'theme ' + (this.state.dark ? 'theme--dark' : 'theme--default')}>
-        <div className='container'>
-          <Router>
-            <div>
-              <NavigationContainer {...this.props} changeTheme={this.changeTheme} loggedInStatus={this.state.loggedInStatus} handleSuccessfulLogout={this.handleSuccessfulLogout} history={this.history} />
+        <div className={'theme ' + (this.state.dark ? 'theme--dark' : 'theme--default')}>
+          <div className='container'>
+            <Router>
+              <div>
+                <NavigationContainer {...this.props} changeTheme={this.changeTheme} isAdmin={this.state.isAdmin} loggedInStatus={this.state.loggedInStatus} handleSuccessfulLogout={this.handleSuccessfulLogout} history={this.history} />
 
-              <Switch>
-                <Route exact path="/" component={Home} />
+                <Switch>
+                  <Route exact path="/" component={Home} />
 
-                <Route 
-                  path='/auth' 
-                  render={props => ( 
-                    <Auth
-                      {...props}
-                      handleSuccessfulLogin={this.handleSuccessfulLogin}
-                      handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
-                    />
-                  )}
-                /> 
+                  <Route 
+                    path='/auth' 
+                    render={props => ( 
+                      <Auth
+                        {...props}
+                        handleSuccessfulLogin={this.handleSuccessfulLogin}
+                        handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
+                      />
+                    )}
+                  /> 
 
-                <Route path='/about-me' component={About} />
-                <Route path='/contact' component={Contact} />
-                <Route path='/blog' component={Blog} />
-                <Route path="/b/:slug" component={BlogDetail} />
-                {this.state.loggedInStatus === "LOGGED_IN" ? (
-                  this.authorizedPages()
-                ) : null}
-                <Route component={NoMatch} />
-              </Switch>
-            </div>
-          </Router>
+                  <Route path='/about-me' component={About} />
+                  <Route path='/login' component={Contact} />
+                  {/* <Route path='/auth' component={<Blog loggedInStatus={this.state.loggedInStatus} />} />  */}
+                  <Route 
+                    path='/blog' 
+                    render={props => ( 
+                      <Blog
+                        loggedInStatus={this.state.loggedInStatus}
+                      />
+                    )}
+                  /> 
+                  {/* <Route path='/blog' component={Blog} /> */}
+                  {/* <Route path="/b/:slug" component={BlogDetail}/> */}
+                  <Route 
+                    path='/b/:slug' 
+                    render={props => ( 
+                      <BlogDetail
+                        {...props}
+                        isAdmin = {this.state.isAdmin}
+                      />
+                    )}
+                  /> 
+                    
+                  
 
+                  {this.state.loggedInStatus === "LOGGED_IN" ? (
+                    this.authorizedPages()
+                  ) : null}
+                  <Route component={NoMatch} />
+                </Switch>
+              </div>
+            </Router>
+
+          </div>
         </div>
-      </div>
     );
   }
 }

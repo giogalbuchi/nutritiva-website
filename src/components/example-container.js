@@ -1,16 +1,16 @@
 import React, {Component } from 'react';
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ExampleItem from './example-item';
+import { db } from '../firebase';
 
 export default class ExamplesContainer extends Component {
     constructor() {
         super();
 
         this.state = {
-            pageTitle: "This is Nutritiva",
-            data: []
+            data: [],
+            loading: true
         };
 
         this.handleFilter = this.handleFilter.bind(this);
@@ -18,34 +18,42 @@ export default class ExamplesContainer extends Component {
     }
 
     handleFilter(filter) {
-        this.setState({
-          data: this.state.data.filter(item => {
-            return item.category === filter;
-          })
-        });
+        if (filter === "CLEAR_FILTERS") {
+            this.getExampleItems();
+        } else {
+            this.setState({
+                data: this.state.data.filter(item => {
+                  return item.data().category === filter;
+                })
+              });
+        }
+        
       }
 
     getExampleItems() {
-        axios.get("https://nutritiva.devcamp.space/portfolio/portfolio_items").then(response => {
+        db.collection('blogs').onSnapshot(snapshot => {
             this.setState({
-                data: response.data.portfolio_items
+                data: snapshot.docs
             });
         })
-        .catch(error => {
-            console.log(error);
-        });
     }
 
     exampleItems() {
         return this.state.data.map(item => {
+            const blog_id = item.id;
+            const blog = item.data();
             return (
-                <ExampleItem key={item.id} item={item} />
+                <ExampleItem key={item.id} blog_id={blog_id} blog={blog} />
             );
         });
     }
 
+
     componentDidMount() {
         this.getExampleItems();
+        this.setState({
+            loading: false
+        })
     }
 
     render() {
@@ -55,11 +63,18 @@ export default class ExamplesContainer extends Component {
                 <div className="filter-btns">
                     <button className="btn" onClick={() => this.handleFilter("Recipe")}>Recipes <FontAwesomeIcon icon="cookie" /></button>
                     <button className="btn" onClick={() => this.handleFilter("Fact")}>Facts <FontAwesomeIcon icon="info-circle" /></button>
+                    <button className="btn" onClick={() => this.handleFilter("CLEAR_FILTERS")}>All </button>
                 </div>
 
                 <div className='example-items-wrapper'>
                     {this.exampleItems()}
                 </div>
+
+                {this.state.loading ? (
+                <div className="spin-icon">
+                    <FontAwesomeIcon icon="spinner" spin/>
+                </div>) : null }
+
             </div>
         );
     }

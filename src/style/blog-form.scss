@@ -9,6 +9,19 @@
         margin-bottom: 0px;
     }
 
+    .image-uploader {
+        input {
+            border-bottom: none;
+        }
+        .spin-icon {
+            font-size: 1.5em;
+            @include themed() {
+                color: t("color-headings")
+            }
+        }
+
+    }
+
     .blog-manager-image-wrapper {
         img {
             width: 100%;

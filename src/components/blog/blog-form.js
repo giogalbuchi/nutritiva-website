@@ -1,6 +1,8 @@
 import React, { Component} from 'react';
 import axios from 'axios';
-import DropzoneComponent from "react-dropzone-component";
+import { db } from '../../firebase';
+import { st } from '../../firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import RichTextEditor from "../forms/rich-text-editor";
 
@@ -12,32 +14,24 @@ export default class BlogForm extends Component {
         super(props);
 
         this.state = {
-            name: "",
-            description: "",
+            title: "",
+            subtitle: "",
             category: "Recipe",
-            position: "",
-            url:"",
-            thumb_image:"",
-            banner_image:"",
-            logo:"",
-            editMode: false,
-            apiUrl: "https://nutritiva.devcamp.space/portfolio/portfolio_items",
-            apiAction: "post"
+            content: "",
+            image_url:"",
+            loading: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.componentConfig = this.componentConfig.bind(this);
-        this.djsConfig = this.djsConfig.bind(this);
-        this.handleThumbDrop = this.handleThumbDrop.bind(this);
         this.deleteImage = this.deleteImage.bind(this);
         this.handleRichTextEditorChange = this.handleRichTextEditorChange.bind(this);
 
         this.thumbRef = React.createRef();
     }
 
-    handleRichTextEditorChange(description) {
-        this.setState({ description });
+    handleRichTextEditorChange(content) {
+        this.setState({ content });
     }
 
     deleteImage(imageType) {
@@ -56,70 +50,21 @@ export default class BlogForm extends Component {
             });
     }
 
-    componentDidUpdate() {
-        if (Object.keys(this.props.blogToEdit).length > 0) {
-            const {
-                id,
-                name,
-                description,
-                category,
-                position,
-                url,
-                thumb_image_url
-            } = this.props.blogToEdit;
-
-            this.props.clearBlogToEdit();
-
-            this.setState({
-                id: id,
-                name: name || "",
-                description: description || "",
-                category: category || "Recipe",
-                position: position || "",
-                url: url || "",
-                editMode: true,
-                apiUrl: `https://nutritiva.devcamp.space/portfolio/portfolio_items/${id}`,
-                apiAction: "patch",
-                thumb_image_url: thumb_image_url || ""
-            });
-        }
-    }
-
-    handleThumbDrop() {
-        return {
-            addedfile: file => this.setState({ thumb_image: file })
-        };
-    }
-
-    componentConfig() {
-        return {
-            iconFiletypes: [".jpg", ".png"],
-            showFiletypeIcon: true,
-            postUrl: "https://httpbin.org/post"
-        };
-    }
-
-    djsConfig() {
-        return {
-            addRemoveLinks: true,
-            maxFiles: 1
-        };
-    }
-
-    buildForm() {
-        let formData = new FormData();
-
-        formData.append("portfolio_item[name]", this.state.name);
-        formData.append("portfolio_item[description]", this.state.description);
-        formData.append("portfolio_item[url]", this.state.url);
-        formData.append("portfolio_item[category]", this.state.category);
-        formData.append("portfolio_item[position]", this.state.position);
-
-        if(this.state.thumb_image) {
-            formData.append("portfolio_item[thumb_image]", this.state.thumb_image);
-        }
-
-        return formData;
+    onFileChange = (e) => {
+        this.setState({
+            loading: true
+        })
+        const file = e.target.files[0]
+        const fileRef = st.child(file.name)
+        fileRef.put(file).then(() => {
+            fileRef.getDownloadURL().then(response => {
+                this.setState({
+                    image_url: response,
+                    loading: false
+                })
+                console.log(response)
+            })
+        })
     }
 
     handleChange(event) {
@@ -129,73 +74,49 @@ export default class BlogForm extends Component {
     }
 
     handleSubmit(event) {
-        axios({
-            method: this.state.apiAction,
-            url: this.state.apiUrl,
-            data: this.buildForm(),
-            withCredentials: true
-            })
-            .then(response => {
-                if (this.state.editMode) {
-                    this.props.handleEditFormSubmission();
-                } else {
-                    this.props.handleNewFormSubmission(response.data.portfolio_item);
-                }
-
-                this.setState({
-                    name:"",
-                    description:"",
-                    category: "Recipe",
-                    position: "",
-                    url: "",
-                    thumb_image: "",
-                    editMode: false,
-                    apiUrl: "https://nutritiva.devcamp.space/portfolio/portfolio_items",
-                    apiAction: "post"
-                });
-
-                [this.thumbRef].forEach(ref => {
-                    ref.current.dropzone.removeAllFiles();
-                });
-            })
-            .catch(error => {
-                console.log("portfolio form handleSubmit error", error);
-            });
-
         event.preventDefault();
+
+        db.collection('blogs').add({
+            title: this.state.title,
+            subtitle: this.state.subtitle,
+            category: this.state.category,
+            content: this.state.content,
+            image_url: this.state.image_url,
+        }).then (() => {
+            document.getElementById("image_uploader").value = null
+            this.setState({
+                title:"",
+                subtitle:"",
+                category: "Recipe",
+                content: "",
+                image_url: "",
+            });
+        })
     }
 
 
     render() {
         return (
-                <form onSubmit={this.handleSubmit} className="blog-form-wrapper">
+                <form id='form1' onSubmit={this.handleSubmit} className="blog-form-wrapper">
                     <div className="two-column">
                         <input
                             type="text"
-                            name="name"
-                            placeholder="Blog Name"
-                            value={this.state.name}
+                            name="title"
+                            placeholder="Blog Title"
+                            value={this.state.title}
                             onChange={this.handleChange}
                         />
 
                         <input
                             type="text"
-                            name="url"
-                            placeholder="URL"
-                            value={this.state.url}
+                            name="subtitle"
+                            placeholder="Blog Subtitle"
+                            value={this.state.subtitle}
                             onChange={this.handleChange}
                         />
                     </div>
 
-                    <div className="two-column">
-                    <input
-                        type="text"
-                        name="position"
-                        placeholder="Position"
-                        value={this.state.position}
-                        onChange={this.handleChange}
-                    />
-
+                    <div className="one-column">
                     <select
                         name="category"
                         value={this.state.category}
@@ -205,45 +126,24 @@ export default class BlogForm extends Component {
                         <option value="Recipe">Recipe</option>
                         <option value="Fact">Fact</option>
                     </select>
+
                     </div>
 
                     <div className="one-column">
-                    {/* <textarea
-                        type="text"
-                        name="description"
-                        placeholder="Description"
-                        value={this.state.description}
-                        onChange={this.handleChange}
-                    /> */}
                         <RichTextEditor handleRichTextEditorChange={this.handleRichTextEditorChange} />
                     </div>
 
-                    <div className="image-uploader one-column">
-                        {this.state.thumb_image_url && this.state.editMode ? (
-                            <div className="blog-manager-image-wrapper">
-                                <img src={this.state.thumb_image_url} />
+                    <div className="image-uploader two-column">
+                        <input id="image_uploader" type="file" onChange={this.onFileChange}/>
 
-                                <div className="image-removal-link">
-                                    <a onClick={() => this.deleteImage("thumb_image")}>
-                                        Remove file
-                                    </a>
-                                </div>
-                            </div>
-                        ) : (
-                            <DropzoneComponent
-                                ref={this.thumbRef}
-                                config={this.componentConfig()}
-                                djsConfig={this.djsConfig()}
-                                eventHandlers={this.handleThumbDrop()}
-                            >
-                                <div className="dz-message">Blog Image</div>
-                            </DropzoneComponent>
-                        )}
-                        
+                        {this.state.loading ? (
+                        <div className="spin-icon">
+                            <FontAwesomeIcon icon="spinner" spin/>
+                        </div>) : null }
                     </div>
 
                     <div className="one-column">
-                        <button className="btn" type="submit">Save</button>
+                        <button disabled={this.state.loading} className="btn" type="submit">Save</button>
                     </div>
                 </form>
         );

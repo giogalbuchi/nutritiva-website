@@ -814,7 +814,6 @@
   }
   .rdw-editor-main {
     height: 100%;
-    width: 900px;
     min-height: 200px;
     @include themed() {
         border: 1px solid t('color-headings');

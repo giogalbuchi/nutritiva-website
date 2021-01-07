@@ -1,11 +1,7 @@
 import React, {Component } from "react";
-import axios from 'axios';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import logo from "../../static/assets/images/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Icons from "./icons";
+import { auth } from '../firebase';
 
 
 
@@ -20,6 +16,7 @@ export default class NavigationComponent extends Component {
         this.changeIcon = this.changeIcon.bind(this);
         this.handleChangeTheme = this.handleChangeTheme.bind(this);
         this.handleHamburger = this.handleHamburger.bind(this);
+        this.handleSignOut = this.handleSignOut.bind(this)
     }
 
     handleHamburger() {
@@ -46,16 +43,11 @@ export default class NavigationComponent extends Component {
         );
     }
 
-    handleSignOut = () => {
-        axios.delete("https://api.devcamp.space/logout", { withCredentials : true }).then(response => {
-            if (response.status === 200) {
-                window.location.reload(true);
-                props.handleSuccessfulLogout();
-            }
-            return response.data;
-        }).catch(error => {
-            console.log("Error signing out", error);
-        });
+    handleSignOut() {
+        auth.signOut().then(() => {
+            console.log('user signed out');
+            this.props.handleSuccessfulLogout();
+        })
     };
 
     
@@ -81,18 +73,21 @@ export default class NavigationComponent extends Component {
                             </NavLink>
                         </div>
                         <div className='nav-link-wrapper'>
-                            <NavLink to="/contact" activeClassName="nav-link-active">
-                                Contact
-                            </NavLink>
-                        </div>
-                        <div className='nav-link-wrapper'>
                             <NavLink to="/blog" activeClassName="nav-link-active">
                                 Blog
                             </NavLink>
                         </div> 
-                        {this.props.loggedInStatus === "LOGGED_IN" ? (
+                        {this.props.loggedInStatus === "NOT_LOGGED_IN" ? (
+                            this.dynamicLink("/auth", "Log In/Sign Up")
+                        ) : null}
+                        {this.props.loggedInStatus === "LOGGED_IN" && this.props.isAdmin === "yes" ? (
                             this.dynamicLink("/blog-manager", "Blog Manager")
                         ) : null}
+                        {this.props.loggedInStatus === "LOGGED_IN" && this.props.isAdmin === "yes" ? (
+                            this.dynamicLink("/admin", "Admin Page")
+                        ) : null}
+
+
                     </div>
                     
                     <div className='right-side'>
@@ -103,7 +98,7 @@ export default class NavigationComponent extends Component {
                             <h3>   Nutritiva</h3>
                         </div>
                         {this.props.loggedInStatus === "LOGGED_IN" ? (
-                            <a className="sign-out-icon" onClick={this.handleSignOut.bind(this)}><FontAwesomeIcon icon="sign-out-alt" /></a>
+                            <a className="sign-out-icon" onClick={this.handleSignOut}><FontAwesomeIcon icon="sign-out-alt" /></a>
                         ) : null}
                     </div>
 

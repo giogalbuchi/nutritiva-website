@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Login from "../auth/login";
-import loginImg from "../../../static/assets/images/auth4.jpg";
-import logo from "../../../static/assets/images/logo.png";
+import Signup from "../auth/signup";
 
 export default class Auth extends Component {
     constructor(props) {
@@ -11,10 +10,12 @@ export default class Auth extends Component {
         this.handleUnsuccessfulAuth = this.handleUnsuccessfulAuth.bind(this);
     }
 
+
     handleSuccessfulAuth() {
         this.props.handleSuccessfulLogin();
         this.props.history.push("/");
     }
+
 
     handleUnsuccessfulAuth() {
         this.props.handleUnsuccessfulLogin();
@@ -23,18 +24,12 @@ export default class Auth extends Component {
   render() {
     return (
         <div className='auth-page-wrapper'>
-            <div
-            className='left-column'
-            style={{
-                backgroundImage: `url(${loginImg})`
-            }}
-            />
+            <div className='left-column'>
+                <Signup handleSuccessfulAuth={this.handleSuccessfulAuth}/>
+            </div>
 
             <div className='right-columm'>
-                <Login 
-                    handleSuccessfulAuth={this.handleSuccessfulAuth}
-                    handleUnsuccessfulAuth={this.handleUnsuccessfulAuth}
-                />
+                <Login handleSuccessfulAuth={this.handleSuccessfulAuth}/>
             </div>
         </div>
     );

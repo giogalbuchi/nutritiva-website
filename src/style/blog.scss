@@ -1,6 +1,18 @@
 .blog-page {
     margin-right: 380px;
     margin-left: 380px;
+    margin-bottom: 150px;
+    height: auto;
+
+    .login-message {
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        @include themed() {
+            color: t('color-headings');
+        }
+        text-align: center;
+    }
 }
 
 @media (max-width: 48em) {
