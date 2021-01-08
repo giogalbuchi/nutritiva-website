@@ -349,7 +349,6 @@
     }
 
     .headline {
-        font-size: 6vh;
         padding-top: 70px;
         height: 270px;
         margin: auto;
@@ -357,15 +356,18 @@
         width: 70%;
 
         #nutrition {
+            font-size: 6vh;
             padding-top: 30px;
             margin: 0;
         }
 
         #meets {
+            font-size: 6vh;
             margin: 0;
         }
 
         span {
+            font-size: 4vh;
             margin-left: auto;
             width: 70%;
         }
@@ -380,7 +382,7 @@
 
     .benefits-section {
         margin: auto;
-        width: 70%;
+        // width: 70%;
         
         .benefits-title {
             margin: auto;
@@ -459,6 +461,15 @@
             }
         }
     }
+}
 
+@media (min-width: 48em) and (max-width: 1500px) {
 
+    .hero-section {
+        height: 700px;
+    }
+    .benefits-section {
+        margin-left: 35px;
+        margin-right: 35px;
+    }
 }

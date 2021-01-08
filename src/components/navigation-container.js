@@ -1,6 +1,7 @@
 import React, {Component } from "react";
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import logo from "../../static/assets/images/logo.png";
 import { auth } from '../firebase';
 
 
@@ -58,7 +59,7 @@ export default class NavigationComponent extends Component {
                 <div className="nav-wrapper">
 
                     <div className='left-side'>
-                        <img src="../../static/assets/images/logo.png" alt="Logo"/>
+                        <img src={logo} alt="Logo"/>
                     </div>
 
                     <div  id="center" className='center-side'>

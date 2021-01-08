@@ -55,7 +55,7 @@ export default function() {
                     Want to learn new recipes to improve your cooking?
                     </div>
                     <div className="recipes-right-column">
-                        <button className="recipes btn"><NavLink to="/blog" activeClassName="nav-link-active">GO SEE SOME RECIPES!</NavLink></button>
+                        <button className="recipes btn"><NavLink to="/blog" activeClassName="nav-link-active">RECIPES!</NavLink></button>
                     </div>
                 </div>
                 <div className="facts-feature">
@@ -63,7 +63,7 @@ export default function() {
                         Want to learn about healthy habits and nutrition?
                     </div>
                     <div className="facts-right-column">
-                        <button className="facts btn"><NavLink to="/blog" activeClassName="nav-link-active">GO FIND SOME FACTS!</NavLink></button>
+                        <button className="facts btn"><NavLink to="/blog" activeClassName="nav-link-active">FACTS!</NavLink></button>
                     </div>
                 </div>
             </div>
